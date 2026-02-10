@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="264dp"
+    android:height="264dp"
+    android:viewportWidth="264"
+    android:viewportHeight="264">
+    
+    <!-- Background (White) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M16,0h232c8.84,0 16,7.16 16,16v232c0,8.84 -7.16,16 -16,16h-232c-8.84,0 -16,-7.16 -16,-16v-232c0,-8.84 7.16,-16 16,-16z"/>
+    
+    <!-- Header -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M24,24h100v10h-100z"/>
+    
+    <!-- Task Item 1 -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M24,50h24v24h-24z"/>
+    <path
+        android:fillColor="#333333"
+        android:pathData="M60,56h150v12h-150z"/>
+    
+    <!-- Task Item 2 -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M24,90h24v24h-24z"/>
+    <path
+        android:fillColor="#333333"
+        android:pathData="M60,96h120v12h-120z"/>
+
+     <!-- Task Item 3 -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M24,130h24v24h-24z"/>
+    <path
+        android:fillColor="#333333"
+        android:pathData="M60,136h160v12h-160z"/>
+
+</vector>
