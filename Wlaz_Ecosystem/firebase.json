@@ -1,0 +1,44 @@
+{
+    "hosting": {
+        "public": ".",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**",
+            "**/*.sh",
+            "**/*.bat",
+            "**/*.exe",
+            "Wlaz_AntiProcast/**",
+            ".agent/**",
+            ".git/**",
+            ".vscode/**",
+            "README.md"
+        ],
+        "headers": [
+            {
+                "source": "**/*.@(js|css|png|jpg|jpeg|gif|svg|webp)",
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "max-age=604800"
+                    }
+                ]
+            }
+        ],
+        "redirects": [
+            {
+                "source": "/",
+                "destination": "/Wlaz_Main/index.html",
+                "type": 301
+            }
+        ],
+        "rewrites": [
+            {
+                "source": "/index.html",
+                "destination": "/Wlaz_Main/index.html"
+            }
+        ],
+        "cleanUrls": true,
+        "trailingSlash": false
+    }
+}

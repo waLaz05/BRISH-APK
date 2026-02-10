@@ -1,0 +1,69 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ========================================
+    // WLAZ ARCADE - Usuarios y Leaderboard
+    // ========================================
+    match /arcade_users/{userId} {
+      // Cualquiera puede ver el leaderboard
+      allow read: if true;
+      // Solo el dueño puede modificar su perfil
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if false; // Nadie puede borrar perfiles
+    }
+    
+    // ========================================
+    // GLOBAL FEED - Social Hub
+    // ========================================
+    match /global_feed/{eventId} {
+      // Todos pueden ver el feed
+      allow read: if true;
+      // Solo usuarios autenticados pueden publicar eventos
+      allow create: if request.auth != null;
+      // Nadie puede editar o borrar eventos (inmutables)
+      allow update, delete: if false;
+    }
+    
+    // ========================================
+    // ANTIPROCAST - Notas del usuario
+    // ========================================
+    match /notes/{noteId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // ========================================
+    // ANTIPROCAST - Items del usuario (hábitos, etc)
+    // ========================================
+    match /user_items/{itemId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // ========================================
+    // ANTIPROCAST - Cloud Sync (user_data)
+    // Full user profile data synced from local storage
+    // ========================================
+    match /user_data/{userId} {
+      // Only the owner can read their data
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Only the owner can create/update their data
+      allow create, update: if request.auth != null 
+        && request.auth.uid == userId
+        // Size limit to prevent abuse (max 1MB per document)
+        && request.resource.size() < 1048576
+        // Required fields validation
+        && request.resource.data.keys().hasAny(['profile', 'habits', 'tasks', 'finance']);
+      
+      // Prevent deletion (data archival policy)
+      allow delete: if false;
+    }
+    
+  }
+}
